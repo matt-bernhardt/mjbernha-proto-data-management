@@ -216,7 +216,7 @@ jobs:
 
       # Debugging what exists prior to the cache web step
       - name: DEBUG Confirm web initial condition
-        run: ls -l .
+        run: ls -l ./web/wp-content/plugins/
 
       - name: Cache web folder
         uses: actions/cache@v2

@@ -158,6 +158,10 @@ jobs:
       - name: run PHP build step
         run: ./.ci/build/php
 
+      # The build step should have sliced the gitignore file. But did it?
+      - name: DEBUG contents of gitignore
+        run: cat ./.gitignore
+
   deploy_to_pantheon:
     container:
       image: quay.io/pantheon-public/build-tools-ci:6.x
@@ -210,6 +214,10 @@ jobs:
           path: ./web
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
+      # Debugging what is coming out of the cache
+      - name: DEBUG Confirm web contents
+        run: ls -l ./web
+
       - name: Cache drush folder
         uses: actions/cache@v2
         env:
@@ -227,9 +235,13 @@ jobs:
       - name: sync build artifact
         run: rsync -rz ./web ./vendor .
 
+      # Debugging contents of bash_env.txt
+      - name: DEBUG check contents of bash_env.txt
+        run: cat ./bash_env.txt
+
       # Debugging why CircleCI works but GitHub Actions do not
-      - name: check project content before deployment
-        run: ls -l . ./web/wp-content/plugins/
+      - name: DEBUG check project content before deployment
+        run: ls -l ./web/wp-content/plugins/
 
       # Deploy to Pantheon
       - name: deploy to Pantheon

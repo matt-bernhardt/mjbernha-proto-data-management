@@ -227,6 +227,10 @@ jobs:
       - name: sync build artifact
         run: rsync -rz ./web ./vendor .
 
+      # Debugging why CircleCI works but GitHub Actions do not
+      - name: check project content before deployment
+        run: ls -l .
+
       # Deploy to Pantheon
       - name: deploy to Pantheon
         run: |

@@ -158,9 +158,18 @@ jobs:
       - name: DEBUG contents of gitignore
         run: cat ./.gitignore
 
+      # Confirming state of vendor directory
+      - name: DEBUG contents of vendor folder after build
+        run: ls -l ./vendor
+
       # Confirming set of plugins at this step
       - name: DEBUG contents of plugin folder after build
         run: ls -l ./web/wp-content/plugins/
+
+      # At this point the plugins folder looks correct, but it isn't being stored in the cache correctly.
+      # There are "Post Cache folder" steps visible in the output after this, but I don't see them
+      # defined anywhere. Figuring out where this cache is being populated will hopefully resolve this
+      # problem.
 
   deploy_to_pantheon:
     container:
@@ -222,6 +231,9 @@ jobs:
       - name: DEBUG Confirm web contents after cache
         run: ls -l ./web/wp-content/plugins/
 
+      # Debugging what is coming out of the cache
+      - name: DEBUG Confirm vendor contents after cache
+        run: ls -l ./vendor
 
       # Set TERMINUS_ENV and related environment variables.
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment

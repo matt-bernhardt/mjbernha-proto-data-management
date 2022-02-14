@@ -158,9 +158,17 @@ jobs:
       - name: DEBUG contents of gitignore
         run: cat ./.gitignore
 
-      # Confirming state of vendor directory
-      - name: DEBUG contents of vendor folder after build
-        run: ls -l ./vendor
+      # Confirming set of plugins at this step
+      - name: DEBUG contents of plugin folder after build
+        run: ls -l ./web/wp-content/plugins/
+
+      - name: Cache web folder
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-web
+        with:
+          path: ./web
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       # Confirming set of plugins at this step
       - name: DEBUG contents of plugin folder after build
@@ -230,10 +238,6 @@ jobs:
       # Debugging what is coming out of the cache
       - name: DEBUG Confirm web contents after cache
         run: ls -l ./web/wp-content/plugins/
-
-      # Debugging what is coming out of the cache
-      - name: DEBUG Confirm vendor contents after cache
-        run: ls -l ./vendor
 
       # Set TERMINUS_ENV and related environment variables.
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment

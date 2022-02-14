@@ -168,12 +168,20 @@ jobs:
       - name: DEBUG contents of plugin folder after build
         run: ls -l ./web/wp-content/plugins/
 
-      - name: DEBUG Update web cache maybe?
+      - name: DEBUG Create built web cache
         uses: actions/cache@v2
         env:
-          cache-name: cache-web
+          cache-name: cache-web-built
         with:
           path: ./web
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+
+      - name: DEBUG Create built vendor cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-vendor-built
+        with:
+          path: ./vendor
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       # Confirming set of plugins at this step
@@ -236,7 +244,7 @@ jobs:
       - name: Cache vendor folder
         uses: actions/cache@v2
         env:
-          cache-name: cache-vendor
+          cache-name: cache-vendor-built
         with:
           path: ./vendor
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
@@ -248,7 +256,7 @@ jobs:
       - name: Cache web folder
         uses: actions/cache@v2
         env:
-          cache-name: cache-web
+          cache-name: cache-web-built
         with:
           path: ./web
           key: ${{ runner.os }}-build-${{ env.cache-name }}

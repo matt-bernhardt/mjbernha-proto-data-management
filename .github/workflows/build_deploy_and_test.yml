@@ -118,11 +118,11 @@ jobs:
       - name: DEBUG 1 where are we
         run: pwd
 
-      - name: DEBUG 2 what gets checked out here
-        run: ls -l .
+      - name: DEBUG 2 what directories exist here now
+        run: find . -type d
 
-      - name: DEBUG 3 what gets checked out in web
-        run: ls -l ./web
+      - name: DEBUG 3 what caches exist
+        run: ls -l /__w/_temp/
 
       - name: Cache composer cache
         uses: actions/cache@v2
@@ -183,6 +183,9 @@ jobs:
       # Confirming set of plugins at this step
       - name: DEBUG contents of plugin folder after build
         run: ls -l ./web/wp-content/plugins/
+
+      - name: DEBUG 2 what directories exist here now
+        run: find . -type d
 
       # At this point the plugins folder looks correct, but it isn't being stored in the cache correctly.
       # There are "Post Cache folder" steps visible in the output after this, but I don't see them

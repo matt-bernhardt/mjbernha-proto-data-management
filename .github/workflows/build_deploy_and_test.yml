@@ -142,14 +142,6 @@ jobs:
           path: ./web
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
-      - name: Cache drush folder
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-drush
-        with:
-          path: ./drush
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-
       # Set TERMINUS_ENV and related environment variables.
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment
       - name: setup-environment-vars
@@ -230,13 +222,6 @@ jobs:
       - name: DEBUG Confirm web contents after cache
         run: ls -l ./web/wp-content/plugins/
 
-      - name: Cache drush folder
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-drush
-        with:
-          path: ./drush
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       # Set TERMINUS_ENV and related environment variables.
       # https://github.com/pantheon-systems/docker-build-tools-ci/blob/6.x/scripts/set-environment
@@ -310,14 +295,6 @@ jobs:
           cache-name: cache-web
         with:
           path: ./web
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-
-      - name: Cache drush folder
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-drush
-        with:
-          path: ./drush
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       # Set TERMINUS_ENV and related environment variables.
@@ -419,14 +396,6 @@ jobs:
           cache-name: cache-web
         with:
           path: ./web
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-
-      - name: Cache drush folder
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-drush
-        with:
-          path: ./drush
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - name: prepare-environment-vars
